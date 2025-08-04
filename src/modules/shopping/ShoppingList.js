@@ -16,9 +16,7 @@ import FilterSection from "../../utilities/components/filter-section/FilterSecti
 import ProductCard from "../../utilities/components/product-card/ProductCard";
 
 // Main Shopping List Component
-export const ShoppingList = ({ onAddToCart, cartItems = [], onUpdateCartCount }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [notification, setNotification] = useState(null);
+export const ShoppingList = () => {
   const [filters, setFilters] = useState({
     category: '',
     priceRange: '',
@@ -140,14 +138,14 @@ export const ShoppingList = ({ onAddToCart, cartItems = [], onUpdateCartCount })
   );
 
   // Update cart count when product quantities change
-  useEffect(() => {
-    const totalItems = Object.values(productQuantities).reduce((sum, qty) => sum + qty, 0);
+  // useEffect(() => {
+  //   const totalItems = Object.values(productQuantities).reduce((sum, qty) => sum + qty, 0);
 
-    // Notify parent component about cart count update
-    if (onUpdateCartCount) {
-      onUpdateCartCount(totalItems);
-    }
-  }, [productQuantities, onUpdateCartCount]);
+  //   // Notify parent component about cart count update
+  //   if (onUpdateCartCount) {
+  //     onUpdateCartCount(totalItems);
+  //   }
+  // }, [productQuantities, onUpdateCartCount]);
 
   // Filter and sort products
   const filteredAndSortedProducts = useMemo(() => {
@@ -183,40 +181,14 @@ export const ShoppingList = ({ onAddToCart, cartItems = [], onUpdateCartCount })
           return a.name.localeCompare(b.name);
       }
     });
-console.log("filtered::", filtered);
+    console.log("filtered::", filtered);
 
     return filtered;
   }, [products, filters]);
 
   const handleAddToCart = useCallback(async (product) => {
-    setIsLoading(true);
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 500));
-
-      if (onAddToCart) {
-        onAddToCart(product);
-      }
-
-      const quantityToAdd = product.quantity || 1;
-      setNotification({
-        type: 'success',
-        message: `${product.name} ${quantityToAdd > 1 ? `(${quantityToAdd} items)` : ''} added to cart!`
-      });
-
-      // Clear notification after 3 seconds
-      setTimeout(() => setNotification(null), 3000);
-
-    } catch (error) {
-      setNotification({
-        type: 'error',
-        message: 'Failed to add item to cart. Please try again.'
-      });
-      setTimeout(() => setNotification(null), 3000);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [onAddToCart]);
+    
+  }, []);
 
   const handleQuantityChange = useCallback((productId, quantity) => {
     setProductQuantities(prev => ({
@@ -246,17 +218,6 @@ console.log("filtered::", filtered);
           title="Premium Ice Cream Collection"
           subtitle="Discover our handcrafted ice cream flavors made with the finest ingredients"
         />
-        {/* Notification */}
-        {notification && (
-          <Alert
-            variant={notification.type === 'success' ? 'success' : 'danger'}
-            className="notification-alert"
-            dismissible
-            onClose={() => setNotification(null)}
-          >
-            {notification.message}
-          </Alert>
-        )}
 
         {/* Filter Section */}
         <FilterSection
@@ -275,7 +236,6 @@ console.log("filtered::", filtered);
                   onAddToCart={handleAddToCart}
                   onQuantityChange={handleQuantityChange}
                   productQuantities={productQuantities}
-                  isLoading={isLoading}
                 />
               </Col>
             ))
@@ -291,12 +251,6 @@ console.log("filtered::", filtered);
       </Container>
     </div>
   );
-};
-
-ShoppingList.propTypes = {
-  onAddToCart: PropTypes.func.isRequired,
-  cartItems: PropTypes.array,
-  onUpdateCartCount: PropTypes.func,
 };
 
 export default ShoppingList;

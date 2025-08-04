@@ -1,0 +1,522 @@
+// SignupModal.scss
+.signup-modal {
+  .modal-dialog {
+    max-width: 500px;
+    margin: 1rem auto;
+  }
+
+  .modal-content {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px var(--shadow-sm);
+    background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-light) 100%);
+  }
+
+  .modal-header {
+    padding: 2rem 2rem 1rem;
+    border: none;
+    
+    .btn-close {
+      margin: 0;
+      padding: 0.5rem;
+      border-radius: 50%;
+    }
+
+    .signup-header {
+      .signup-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        display: block;
+        color: var(--lusious-pink);
+      }
+
+      h3 {
+        color: var(--text-primary);
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        opacity: 1;
+      }
+    }
+  }
+
+  .modal-body {
+    padding-top: 0;
+  }
+
+  // Progress Indicator
+  .signup-progress {
+    .progress-steps {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+
+      .step-number {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--bg-light);
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        font-size: 0.85rem;
+        border: 2px solid var(--border-light);
+        transition: all 0.3s ease;
+        margin-bottom: 0.5rem;
+      }
+
+      .step-label {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+        text-align: center;
+      }
+
+      &.active {
+        .step-number {
+          background: var(--lusious-pink);
+          color: var(--bg-white);
+          border-color: var(--lusious-pink);
+        }
+        
+        .step-label {
+          color: var(--lusious-pink);
+          font-weight: 600;
+        }
+      }
+
+      &.completed {
+        .step-number {
+          background: var(--bs-success);
+          border-color: var(--bs-success);
+          color: var(--bg-white);
+        }
+        
+        .step-label {
+          color: var(--bs-success);
+        }
+      }
+    }
+
+    .progress-line {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: var(--border-light);
+      z-index: 1;
+      border-radius: 2px;
+    }
+  }
+
+  // Form Styles
+  .signup-step {
+    .step-title {
+      color: var(--text-primary);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-light);
+
+      i {
+        color: var(--lusious-pink);
+        margin-right: 0.5rem;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .form-label {
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .form-control {
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: var(--bg-white);
+
+    &:focus {
+      border-color: var(--lusious-pink);
+      box-shadow: 0 0 0 0.2rem var(--lusious-pink-focus);
+      background: var(--bg-white);
+    }
+
+    &::placeholder {
+      color: var(--dark-text-muted);
+      font-size: 0.9rem;
+    }
+
+    &.is-invalid {
+      border-color: var(--bs-danger);
+      
+      &:focus {
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.15);
+      }
+    }
+  }
+
+  .input-group {
+    .input-group-text {
+      background: var(--bg-input);
+      border: 2px solid var(--border-color);
+      border-right: none;
+      color: var(--text-secondary);
+      border-radius: 8px 0 0 8px;
+    }
+
+    .form-control {
+      border-left: none;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .btn {
+      border: 2px solid var(--border-color);
+      border-left: none;
+      border-radius: 0 8px 8px 0;
+      background: var(--bg-input);
+      color: var(--text-secondary);
+      
+      &:hover {
+        background: var(--border-light);
+        color: var(--text-dark);
+        border-color: var(--border-color);
+      }
+    }
+  }
+
+  // Password Requirements
+  .password-requirements {
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    background: var(--bg-light);
+    border-radius: 6px;
+    border-left: 3px solid var(--lusious-pink);
+
+    .requirement-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 0;
+
+      li {
+        display: flex;
+        align-items: center;
+        font-size: 0.8rem;
+        margin-bottom: 0.25rem;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        i {
+          width: 16px;
+          margin-right: 0.5rem;
+          font-size: 0.7rem;
+        }
+
+        &.valid {
+          color: var(--bs-success);
+          
+          i {
+            color: var(--bs-success);
+          }
+        }
+
+        &.invalid {
+          color: var(--bs-danger);
+          
+          i {
+            color: var(--bs-danger);
+          }
+        }
+      }
+    }
+  }
+
+  // Form Check (Checkboxes)
+  .form-check {
+    margin-bottom: 1rem;
+
+    .form-check-input {
+      border: 2px solid var(--border-color);
+      border-radius: 4px;
+      margin-top: 0.1rem;
+      
+      &:checked {
+        background-color: var(--lusious-pink);
+        border-color: var(--lusious-pink);
+      }
+      
+      &:focus {
+        box-shadow: 0 0 0 0.2rem var(--lusious-pink-focus);
+      }
+    }
+
+    .form-check-label {
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      margin-left: 0.5rem;
+      line-height: 1.4;
+
+      a {
+        color: var(--lusious-pink);
+        text-decoration: none;
+        font-weight: 500;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    &.is-invalid {
+      .form-check-input {
+        border-color: var(--bs-danger);
+      }
+    }
+  }
+
+  // Step Actions
+  .step-actions {
+    margin-top: 2rem;
+    
+    .btn {
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.btn-primary {
+        background: var(--lusious-pink);
+        border: none;
+        
+        &:hover {
+          background: var(--lusious-pink-hover);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px var(--lusious-pink-light);
+        }
+        
+        &:disabled {
+          transform: none;
+          box-shadow: none;
+          opacity: 0.7;
+        }
+      }
+
+      &.btn-outline-secondary {
+        border: 2px solid var(--text-secondary);
+        color: var(--text-secondary);
+        background: var(--bg-white);
+        
+        &:hover {
+          background: var(--text-secondary);
+          color: var(--bg-white);
+          transform: translateY(-1px);
+        }
+      }
+
+      i {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  // Invalid Feedback
+  .invalid-feedback {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--bs-danger);
+    margin-top: 0.5rem;
+    font-weight: 500;
+  }
+
+  // Bottom Link
+  .border-top {
+    border-color: var(--border-color) !important;
+    
+    p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .btn-link {
+      color: var(--lusious-pink);
+      font-weight: 600;
+      font-size: 0.9rem;
+      
+      &:hover {
+        color: var(--lusious-pink-hover);
+      }
+    }
+  }
+
+  // Loading States
+  .spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  // Alert
+  .alert {
+    border-radius: 8px;
+    border: none;
+    padding: 1rem;
+    font-size: 0.9rem;
+    
+    &.alert-danger {
+      background: rgba(220, 53, 69, 0.1);
+      color: var(--bs-danger);
+      
+      i {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  // Responsive Design
+  @media (max-width: 576px) {
+    .modal-dialog {
+      margin: 0.5rem;
+      max-width: none;
+    }
+
+    .modal-header {
+      padding: 1.5rem 1rem 1rem;
+      
+      .signup-header {
+        .signup-icon {
+          font-size: 2rem;
+        }
+        
+        h3 {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    .modal-body {
+      padding: 1.5rem 1rem;
+    }
+
+    .progress-steps {
+      .step {
+        .step-number {
+          width: 35px;
+          height: 35px;
+          font-size: 0.8rem;
+        }
+        
+        .step-label {
+          font-size: 0.75rem;
+        }
+      }
+      
+      .progress-line {
+        width: 40px;
+      }
+    }
+
+    .step-actions {
+      .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  // Animation
+  &.fade .modal-dialog {
+    transition: transform 0.4s ease-out;
+  }
+
+  &.show .modal-dialog {
+    transform: none;
+  }
+}
+
+// Additional utility classes
+.text-gradient {
+  background: var(--lusious-pink);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+// Dark mode support (optional)
+@media (prefers-color-scheme: dark) {
+  .signup-modal {
+    .modal-content {
+      background: #2d3748;
+    }
+    
+    .form-control {
+      background: #4a5568;
+      border-color: #4a5568;
+      color: white;
+      
+      &::placeholder {
+        color: #a0aec0;
+      }
+      
+      &:focus {
+        background: #4a5568;
+        border-color: var(--lusious-pink);
+      }
+    }
+    
+    .input-group-text {
+      background: #4a5568;
+      border-color: #4a5568;
+      color: #a0aec0;
+    }
+    
+    .form-label {
+      color: #e2e8f0;
+    }
+    
+    .step-title {
+      color: #e2e8f0;
+      border-color: #4a5568;
+    }
+    
+    .password-requirements {
+      background: #4a5568;
+      border-color: var(--lusious-pink);
+    }
+    
+    .form-check-label {
+      color: #e2e8f0;
+    }
+  }
+}

@@ -1,0 +1,111 @@
+// About Section
+.about-us {
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 30px 30px 0 0;
+  margin-top: 2rem;
+
+  .about-us-images {
+    .about-us-right-top {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 250px;
+      height: auto;
+      transform: rotate(15deg);
+      opacity: 0.7;
+      transition: all 0.3s ease;
+      
+      @media (max-width: 768px) {
+        width: 100px;
+        height: 100px;
+        top: 10px;
+        right: 10px;
+      }
+
+      &:hover {
+        opacity: 1;
+        transform: rotate(15deg) scale(1.05);
+      }
+    }
+
+    .about-us-left-bottom {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      width: 250px;
+      height: auto;
+      transform: rotate(-10deg);
+      opacity: 0.7;
+      transition: all 0.3s ease;
+      
+      @media (max-width: 768px) {
+        width: 80px;
+        height: 80px;
+        bottom: 10px;
+        left: 10px;
+      }
+
+      &:hover {
+        opacity: 1;
+        transform: rotate(-10deg) scale(1.05);
+      }
+    }
+  }
+
+  .about-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--bs-dark);
+      margin-bottom: 2rem;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--lusious-pink), #d41068);
+        border-radius: 2px;
+      }
+    }
+
+    .about-text {
+      p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--bs-secondary);
+        margin-bottom: 1.5rem;
+
+        &.lead {
+          font-size: 1.3rem;
+          font-weight: 400;
+          color: var(--bs-dark);
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .about-us {
+    padding: 3rem 0;
+    
+    .about-content h2 {
+      font-size: 2rem;
+    }
+  }
+}

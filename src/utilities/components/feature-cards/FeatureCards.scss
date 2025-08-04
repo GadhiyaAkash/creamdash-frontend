@@ -1,0 +1,57 @@
+// Equal Height Cards
+.equal-height {
+  .card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    padding: 1.5rem;
+  }
+}
+
+.feature-card {
+  border-radius: 15px;
+  overflow: hidden;
+  
+  .feature-icon {
+    margin-bottom: 1rem;
+  }
+
+  .feature-card-image {
+    width: 80px !important;
+    height: 80px !important;
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .card-text {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+}

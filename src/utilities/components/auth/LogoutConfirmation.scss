@@ -1,0 +1,192 @@
+// Logout Confirmation Modal Styles
+.logout-modal {
+  .modal-dialog {
+    max-width: 500px;
+    margin: 2rem auto;
+  }
+
+  .modal-content {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px var(--shadow-lg);
+    background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-light) 100%);
+    animation: slideInDown 0.4s ease-out;
+    overflow: hidden;
+  }
+
+  .modal-header {
+    padding: 3rem 2.5rem 2rem;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--lusious-pink-light) 0%, rgba(78, 205, 196, 0.1) 100%);
+    border-bottom: none;
+    
+    .btn-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      margin: 0;
+      padding: 0.75rem;
+      border-radius: 50%;
+      background: var(--overlay-light);
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+      
+      &:hover {
+        background: rgba(0, 0, 0, 0.1);
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .logout-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--lusious-pink) 0%, var(--lusious-pink-hover) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    box-shadow: 0 8px 20px var(--lusious-pink-shadow);
+    
+    i {
+      font-size: 2rem;
+      color: var(--white);
+    }
+  }
+
+  .modal-body {
+    padding: 1.5rem 2.5rem 2.5rem;
+    text-align: center;
+  }
+
+  .logout-title {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .logout-message {
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    
+    strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+  }
+
+  .logout-subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+
+  // Button styling
+  .btn {
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    min-width: 120px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  .btn-outline-secondary {
+    border-color: var(--medium-grey);
+    color: var(--text-dark);
+    background: var(--light-grey);
+    border-width: 2px;
+    
+    &:hover {
+      background: var(--medium-grey);
+      border-color: var(--medium-grey);
+      color: var(--text-dark);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .btn-danger {
+    background: linear-gradient(135deg, var(--lusious-pink) 0%, var(--soft-purple) 100%);
+    border: none;
+    box-shadow: 0 4px 12px rgba(var(--lusious-pink-rgb), 0.3);
+    
+    &:hover {
+      background: linear-gradient(135deg, var(--soft-purple) 0%, var(--lusious-pink) 100%);
+      box-shadow: 0 6px 16px rgba(var(--lusious-pink-rgb), 0.4);
+    }
+  }
+
+  // Animation is applied to the base modal-content above
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+  .logout-modal {
+    .modal-dialog {
+      margin: 1rem;
+    }
+    
+    .modal-header {
+      padding: 1.5rem 1.5rem 1rem;
+    }
+    
+    .modal-body {
+      padding: 0 1.5rem 1.5rem;
+    }
+    
+    .logout-icon {
+      width: 50px;
+      height: 50px;
+      
+      i {
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .logout-modal {
+    .modal-content {
+      background: linear-gradient(135deg, var(--dark-bg-primary) 0%, var(--dark-bg-secondary) 100%);
+      color: var(--dark-text-primary);
+    }
+    
+    .logout-title {
+      color: var(--dark-text-primary);
+    }
+    
+    .logout-message {
+      color: var(--dark-text-secondary);
+      
+      strong {
+        color: var(--dark-text-primary);
+      }
+    }
+    
+    .logout-subtitle {
+      color: var(--dark-text-muted);
+    }
+  }
+}

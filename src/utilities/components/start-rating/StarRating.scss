@@ -1,0 +1,16 @@
+.rating-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    .star-rating {
+        display: flex;
+        gap: 2px;
+    }
+
+    .rating-text {
+        font-size: 0.875rem;
+        color: var(--bs-secondary);
+        font-weight: 500;
+    }
+}

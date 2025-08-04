@@ -1,0 +1,142 @@
+// Shopping List Container
+.shopping-list-container {
+  padding-top: var(--header-height);
+}
+
+// Header Section
+.shopping-header {
+  margin-bottom: 3rem;
+  
+  .shopping-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--font-color);
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1s ease-out;
+
+    @media (max-width: 768px) {
+      font-size: 2.5rem;
+    }
+
+    @media (max-width: 576px) {
+      font-size: 2rem;
+    }
+  }
+
+  .shopping-subtitle {
+    font-size: 1.2rem;
+    color: var(--font-color);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+}
+
+
+// Notification Alert
+.notification-alert {
+  position: fixed;
+  top: calc(var(--header-height) + 1rem);
+  right: 20px;
+  z-index: 1050;
+  min-width: 300px;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+  animation: slideInRight 0.3s ease-out;
+
+  @media (max-width: 576px) {
+    right: 10px;
+    left: 10px;
+    min-width: auto;
+  }
+}
+
+// No Products Message
+.no-products {
+  background: white;
+  border-radius: 16px;
+  padding: 3rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+
+  h4 {
+    color: var(--bs-dark);
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: var(--bs-secondary);
+    font-size: 1.1rem;
+  }
+}
+
+// Animations
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@media (max-width: 992px) {
+  .shopping-header {
+    .shopping-title {
+      font-size: 2.5rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .shopping-list-container {
+    .container-fluid {
+      padding: 1rem;
+    }
+  }
+
+  .shopping-header {
+    margin-bottom: 2rem;
+    
+    .shopping-title {
+      font-size: 2rem;
+    }
+
+    .shopping-subtitle {
+      font-size: 1rem;
+    }
+  }
+}
+
+.quantity-btn:focus,
+.add-to-cart-btn:focus {
+  outline: 2px solid var(--lusious-pink);
+  outline-offset: 2px;
+}

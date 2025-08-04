@@ -183,6 +183,7 @@ export const ShoppingList = ({ onAddToCart, cartItems = [], onUpdateCartCount })
           return a.name.localeCompare(b.name);
       }
     });
+console.log("filtered::", filtered);
 
     return filtered;
   }, [products, filters]);

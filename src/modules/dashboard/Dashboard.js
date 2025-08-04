@@ -9,7 +9,7 @@ import ProductList from "../../utilities/components/product-list/ProductList";
 import HeroSection from "../../utilities/components/hero-section/HeroSection";
 
 // Main Dashboard Component
-export const Dashboard = ({ onAddToCart, onUpdateCartCount, user = null }) => {
+const Dashboard = ({ onAddToCart, onUpdateCartCount, user = null }) => {
 
   return (
     <>
@@ -62,3 +62,5 @@ Dashboard.defaultProps = {
   onUpdateCartCount: () => { },
   user: null
 };
+
+export default Dashboard;

@@ -73,7 +73,7 @@ const Header = ({
   // Navigation items
   const navigationItems = useMemo(() => [
     { path: '/', label: 'Home', exact: true },
-    { path: '/shop', label: 'Shop', exact: false },
+    { path: '/shopping', label: 'Shop', exact: false },
     { path: '/about', label: 'About', exact: false },
     { path: '/contact', label: 'Contact', exact: false }
   ], []);

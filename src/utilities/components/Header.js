@@ -8,7 +8,8 @@ import LoginModal from './auth/LoginModal';
 import SignupModal from './auth/SignupModal';
 import LogoutConfirmation from './auth/LogoutConfirmation';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../store/userSlice';
+import { setUser } from '../../store/userSlice';
+import Notification from './notification/Notification';
 
 const Header = ({
   cartCount = 0,
@@ -291,6 +292,7 @@ const Header = ({
             </Navbar.Collapse>
           </Container>
         </Navbar>
+        <Notification />
       </header>
       {/* Authentication Modals */}
       <LoginModal

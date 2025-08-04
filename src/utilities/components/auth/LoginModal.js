@@ -3,7 +3,7 @@ import { Modal, Form, Button, Alert, InputGroup } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './LoginModal.scss';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../store/userSlice';
+import { setUser } from '../../../store/userSlice';
 
 // Dummy credentials for demo purposes
 const DUMMY_CREDENTIALS = [

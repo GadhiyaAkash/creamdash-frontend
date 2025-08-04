@@ -2,6 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { Modal, Form, Button, Alert, InputGroup } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './LoginModal.scss';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../store/userSlice';
 
 // Dummy credentials for demo purposes
 const DUMMY_CREDENTIALS = [
@@ -10,7 +12,7 @@ const DUMMY_CREDENTIALS = [
   { email: 'demo@creamdash.com', password: 'demo123', name: 'Demo User', role: 'customer' },
 ];
 
-const LoginModal = ({ show, onHide, onLogin, onSwitchToSignup }) => {
+const LoginModal = ({ show, onHide, onSwitchToSignup }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -20,6 +22,7 @@ const LoginModal = ({ show, onHide, onLogin, onSwitchToSignup }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [showDemoCredentials, setShowDemoCredentials] = useState(false);
+  const dispatch = useDispatch();
 
   const handleInputChange = useCallback((e) => {
     const { name, value, type, checked } = e.target;
@@ -53,8 +56,12 @@ const LoginModal = ({ show, onHide, onLogin, onSwitchToSignup }) => {
         role: user.role,
         rememberMe: formData.rememberMe
       };
-      
-      onLogin(userData);
+      dispatch(setUser(userData));
+      localStorage.setItem('creamDashUser', JSON.stringify(userData));
+      // if (userData.rememberMe) {
+      //   localStorage.setItem('creamDashUser', JSON.stringify(userData));
+      // }
+      onHide();
       // Clear form and close modal
       setFormData({
         email: '',
@@ -70,7 +77,7 @@ const LoginModal = ({ show, onHide, onLogin, onSwitchToSignup }) => {
     }
 
     setIsLoading(false);
-  }, [formData, onLogin, onHide]);
+  }, [formData, onHide]);
 
   const handleClose = useCallback(() => {
     setFormData({
@@ -102,10 +109,10 @@ const LoginModal = ({ show, onHide, onLogin, onSwitchToSignup }) => {
   }, []);
 
   return (
-    <Modal 
-      show={show} 
-      onHide={handleClose} 
-      centered 
+    <Modal
+      show={show}
+      onHide={handleClose}
+      centered
       className="login-modal"
       backdrop="static"
     >
@@ -208,7 +215,7 @@ const LoginModal = ({ show, onHide, onLogin, onSwitchToSignup }) => {
           <div className="divider">
             <span>Demo Accounts</span>
           </div>
-          
+
           <Button
             variant="link"
             size="sm"
@@ -253,9 +260,9 @@ const LoginModal = ({ show, onHide, onLogin, onSwitchToSignup }) => {
           </p>
           <p className="mb-0">
             Don't have an account?{' '}
-            <Button 
-              variant="link" 
-              size="sm" 
+            <Button
+              variant="link"
+              size="sm"
               className="p-0"
               onClick={onSwitchToSignup}
               disabled={isLoading}
@@ -272,7 +279,6 @@ const LoginModal = ({ show, onHide, onLogin, onSwitchToSignup }) => {
 LoginModal.propTypes = {
   show: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
-  onLogin: PropTypes.func.isRequired,
   onSwitchToSignup: PropTypes.func.isRequired,
 };
 

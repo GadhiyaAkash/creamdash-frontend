@@ -2,8 +2,9 @@ import React, { useCallback } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './LogoutConfirmation.scss';
+import { useSelector } from 'react-redux';
 
-const LogoutConfirmation = ({ show, onHide, onConfirm, userName = 'User' }) => {
+const LogoutConfirmation = ({ show, onHide, onConfirm }) => {
   const handleConfirm = useCallback(() => {
     onConfirm();
     onHide();
@@ -12,6 +13,7 @@ const LogoutConfirmation = ({ show, onHide, onConfirm, userName = 'User' }) => {
   const handleCancel = useCallback(() => {
     onHide();
   }, [onHide]);
+  const user = useSelector(state => state.user.user);
 
   return (
     <Modal 
@@ -31,7 +33,7 @@ const LogoutConfirmation = ({ show, onHide, onConfirm, userName = 'User' }) => {
       <Modal.Body>
         <h5 className="logout-title">Confirm Logout</h5>
         <p className="logout-message">
-          Are you sure you want to sign out, <strong>{userName}</strong>?
+          Are you sure you want to sign out, <strong>{user?.name || 'User'}</strong>?
         </p>
         <p className="logout-subtitle">
           You'll need to sign in again to access your account.
@@ -61,12 +63,7 @@ const LogoutConfirmation = ({ show, onHide, onConfirm, userName = 'User' }) => {
 LogoutConfirmation.propTypes = {
   show: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
-  userName: PropTypes.string,
-};
-
-LogoutConfirmation.defaultProps = {
-  userName: 'User',
+  onConfirm: PropTypes.func.isRequired
 };
 
 export default LogoutConfirmation;

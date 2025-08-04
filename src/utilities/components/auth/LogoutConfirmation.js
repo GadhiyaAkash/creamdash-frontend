@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './LogoutConfirmation.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const LogoutConfirmation = ({ show, onHide, onConfirm }) => {
   const handleConfirm = useCallback(() => {

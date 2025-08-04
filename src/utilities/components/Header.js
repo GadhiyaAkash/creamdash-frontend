@@ -7,19 +7,22 @@ import './Header.scss';
 import LoginModal from './auth/LoginModal';
 import SignupModal from './auth/SignupModal';
 import LogoutConfirmation from './auth/LogoutConfirmation';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../store/userSlice';
 
 const Header = ({
   cartCount = 0,
   cartItems = []
 }) => {
+  const location = useLocation();
+  const user = useSelector(state => state.user.user);
+  const dispatch = useDispatch();
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const location = useLocation();
-  const user = useSelector(state => state.user.user);
 
   // Handle scroll effect for navbar background
   useEffect(() => {
@@ -97,6 +100,7 @@ const Header = ({
   }, []);
 
   const handleLogout = useCallback(() => {
+    dispatch(setUser(null));
     localStorage.removeItem('creamDashUser');
     setShowLogoutModal(false);
   }, []);

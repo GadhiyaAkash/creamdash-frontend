@@ -9,11 +9,11 @@ import ProductList from "../../utilities/components/product-list/ProductList";
 import HeroSection from "../../utilities/components/hero-section/HeroSection";
 
 // Main Dashboard Component
-const Dashboard = ({ onAddToCart, onUpdateCartCount, user = null }) => {
+const Dashboard = () => {
 
   return (
     <>
-      <HeroSection user={user} />
+      <HeroSection />
       <div className="divider-image" aria-hidden="true"></div>
 
       <Container>
@@ -33,10 +33,7 @@ const Dashboard = ({ onAddToCart, onUpdateCartCount, user = null }) => {
             subtitle="Discover our most loved flavors, crafted with premium ingredients and love."
           />
           <Row className="g-4">
-            <ProductList
-              onAddToCart={onAddToCart}
-              onUpdateCartCount={onUpdateCartCount}
-            />
+            <ProductList />
           </Row>
         </section>
 
@@ -45,22 +42,6 @@ const Dashboard = ({ onAddToCart, onUpdateCartCount, user = null }) => {
       </Container>
     </>
   );
-};
-
-Dashboard.propTypes = {
-  onAddToCart: PropTypes.func,
-  onUpdateCartCount: PropTypes.func,
-  user: PropTypes.shape({
-    name: PropTypes.string,
-    role: PropTypes.string,
-    email: PropTypes.string
-  })
-};
-
-Dashboard.defaultProps = {
-  onAddToCart: () => { },
-  onUpdateCartCount: () => { },
-  user: null
 };
 
 export default Dashboard;

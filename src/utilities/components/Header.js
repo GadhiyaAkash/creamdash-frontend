@@ -11,12 +11,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../store/userSlice';
 import Notification from './notification/Notification';
 
-const Header = ({
-  cartCount = 0,
-  cartItems = []
-}) => {
+const Header = () => {
   const location = useLocation();
   const user = useSelector(state => state.user.user);
+  const { cartItems, cartCount } = useSelector(state => state.cart);
   const dispatch = useDispatch();
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -315,22 +313,6 @@ const Header = ({
       />
     </>
   );
-};
-
-Header.propTypes = {
-  cartCount: PropTypes.number,
-  cartItems: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    title: PropTypes.string,
-    price: PropTypes.number,
-    quantity: PropTypes.number,
-    image: PropTypes.string
-  }))
-};
-
-Header.defaultProps = {
-  cartCount: 0,
-  cartItems: []
 };
 
 export default Header;

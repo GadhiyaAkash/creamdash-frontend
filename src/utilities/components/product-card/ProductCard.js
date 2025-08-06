@@ -1,15 +1,15 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import PropTypes from "prop-types";
 import { Card, Button, Badge, Spinner } from "react-bootstrap";
 import StarRating from "../start-rating/StarRating";
 import "./ProductCard.scss";
 import { notify } from "../../../store/notificationSlice";
+import { addCartItem } from "../../../store/cartSlice";
 
 // Product Card Component
-const ProductCard = ({ product, onAddToCart, onQuantityChange, productQuantities }) => {
+const ProductCard = ({ product, onQuantityChange }) => {
     const dispatch = useDispatch();
-    const quantity = productQuantities[product.id] || 0;
+    console.log("product::", product);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleQuantityChange = useCallback((newQuantity) => {
@@ -18,10 +18,12 @@ const ProductCard = ({ product, onAddToCart, onQuantityChange, productQuantities
         }
     }, [product.id, onQuantityChange]);
 
-    const handleAddToCart = useCallback(async () => {
+    const handleAddToCart = useCallback(async (product) => {
+        console.log("Adding to cart:", product);
+        
         const productWithQuantity = {
             ...product,
-            quantity: Math.max(1, quantity)
+            quantity: Math.max(1, product.quantity)
         };
         setIsLoading(true);
         try {
@@ -33,8 +35,8 @@ const ProductCard = ({ product, onAddToCart, onQuantityChange, productQuantities
                 type: 'success',
                 message: `${productWithQuantity.name} ${quantityToAdd > 1 ? `(${quantityToAdd} items)` : ''} added to cart!`
             }));
-            
-            onAddToCart(productWithQuantity);
+            console.log("Product added to cart:", productWithQuantity);
+            dispatch(addCartItem(productWithQuantity));
 
         } catch (error) {
             dispatch(notify({
@@ -44,7 +46,7 @@ const ProductCard = ({ product, onAddToCart, onQuantityChange, productQuantities
         } finally {
             setIsLoading(false);
         }
-    }, [product, quantity, onAddToCart, dispatch]);
+    }, [product, dispatch]);
 
     return (
         <Card className="shopping-product-card h-100 shadow-sm">
@@ -100,7 +102,7 @@ const ProductCard = ({ product, onAddToCart, onQuantityChange, productQuantities
                 <div className="mt-auto">
                     {/* Quantity Selection Section */}
                     {
-                        quantity > 0 && (
+                        product?.quantity > 0 && (
                             <div className="quantity-section mb-3">
                                 <label className="quantity-label">Quantity:</label>
                                 <div className="quantity-controls">
@@ -108,17 +110,17 @@ const ProductCard = ({ product, onAddToCart, onQuantityChange, productQuantities
                                         variant="outline-primary"
                                         size="sm"
                                         className="quantity-btn"
-                                        onClick={() => handleQuantityChange(quantity - 1)}
-                                        disabled={quantity <= 0}
+                                        onClick={() => handleQuantityChange(product.quantity - 1)}
+                                        disabled={product.quantity <= 0}
                                     >
                                         -
                                     </Button>
-                                    <span className="quantity-display">{quantity}</span>
+                                    <span className="quantity-display">{product.quantity}</span>
                                     <Button
                                         variant="outline-primary"
                                         size="sm"
                                         className="quantity-btn"
-                                        onClick={() => handleQuantityChange(quantity + 1)}
+                                        onClick={() => handleQuantityChange(product.quantity + 1)}
                                     >
                                         +
                                     </Button>
@@ -129,12 +131,12 @@ const ProductCard = ({ product, onAddToCart, onQuantityChange, productQuantities
 
                     {/* Add to Cart Button */}
                     {
-                        quantity === 0 && (
+                        product?.quantity === 0 && (
                             <div className="add-to-cart-section">
                                 <Button
                                     variant="primary"
                                     className="add-to-cart-btn w-100"
-                                    onClick={handleAddToCart}
+                                    onClick={() => handleAddToCart(product)}
                                     disabled={isLoading}
                                 >
                                     {isLoading ? (
@@ -145,7 +147,7 @@ const ProductCard = ({ product, onAddToCart, onQuantityChange, productQuantities
                                     ) : (
                                         <>
                                             <i className="bi bi-cart-plus me-2"></i>
-                                            Add to Cart ${(product.price * Math.max(1, quantity)).toFixed(2)}
+                                            Add to Cart ${(product.price * Math.max(1, product.quantity)).toFixed(2)}
                                         </>
                                     )}
                                 </Button>
@@ -156,27 +158,6 @@ const ProductCard = ({ product, onAddToCart, onQuantityChange, productQuantities
             </Card.Body>
         </Card>
     );
-};
-
-ProductCard.propTypes = {
-    product: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        originalPrice: PropTypes.number,
-        image: PropTypes.string.isRequired,
-        rating: PropTypes.number.isRequired,
-        reviews: PropTypes.number.isRequired,
-        description: PropTypes.string.isRequired,
-        isPopular: PropTypes.bool,
-        discount: PropTypes.number,
-        prepTime: PropTypes.string.isRequired,
-        size: PropTypes.string.isRequired,
-    }).isRequired,
-    onAddToCart: PropTypes.func.isRequired,
-    onQuantityChange: PropTypes.func.isRequired,
-    productQuantities: PropTypes.object.isRequired,
-    variant: PropTypes.oneOf(["default", "shopping"]),
 };
 
 export default ProductCard;

@@ -18,8 +18,7 @@ export const PRODUCT_LIST = [
         discount: 19,
         prepTime: "Ready to serve",
         size: "1 Pint",
-        category: "classic",
-        quantity: 0
+        category: "classic"
     },
     {
         id: 2,
@@ -32,8 +31,7 @@ export const PRODUCT_LIST = [
         isPopular: true,
         prepTime: "Ready to serve",
         size: "1 Pint",
-        category: "classic",
-        quantity: 0
+        category: "classic"
     },
     {
         id: 3,
@@ -47,8 +45,7 @@ export const PRODUCT_LIST = [
         discount: 18,
         prepTime: "Ready to serve",
         size: "1 Pint",
-        category: "classic",
-        quantity: 0
+        category: "classic"
     },
     {
         id: 4,
@@ -60,8 +57,7 @@ export const PRODUCT_LIST = [
         description: "Cool mint ice cream loaded with rich chocolate chips.",
         prepTime: "Ready to serve",
         size: "1 Pint",
-        category: "classic",
-        quantity: 0
+        category: "classic"
     },
     {
         id: 5,
@@ -74,7 +70,6 @@ export const PRODUCT_LIST = [
         isPopular: true,
         prepTime: "Ready to serve",
         size: "1 Pint",
-        category: "premium",
-        quantity: 0
+        category: "premium"
     }
 ];

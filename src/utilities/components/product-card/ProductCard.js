@@ -37,6 +37,8 @@ const ProductCard = ({ product, onQuantityChange }) => {
             }));
             console.log("Product added to cart:", productWithQuantity);
             dispatch(addCartItem(productWithQuantity));
+            // Notify the parent component to update the quantity
+            onQuantityChange(product.id, productWithQuantity.quantity);
 
         } catch (error) {
             dispatch(notify({
@@ -46,7 +48,7 @@ const ProductCard = ({ product, onQuantityChange }) => {
         } finally {
             setIsLoading(false);
         }
-    }, [product, dispatch]);
+    }, [product, dispatch, onQuantityChange]);
 
     return (
         <Card className="shopping-product-card h-100 shadow-sm">
@@ -103,7 +105,7 @@ const ProductCard = ({ product, onQuantityChange }) => {
                     {/* Quantity Selection Section */}
                     {
                         product?.quantity > 0 && (
-                            <div className="quantity-section mb-3">
+                            <div className="quantity-section">
                                 <label className="quantity-label">Quantity:</label>
                                 <div className="quantity-controls">
                                     <Button

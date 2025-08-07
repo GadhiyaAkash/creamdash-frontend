@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import PropTypes from "prop-types";
 import { Badge, Button, Card, Col, Form, InputGroup, Row } from "react-bootstrap";
+import './CartItem.scss';
 
 const CartItem = ({ item, onUpdateQuantity, onRemove, isLoading }) => {
     const [quantity, setQuantity] = useState(item.quantity || 1);
@@ -98,15 +99,9 @@ const CartItem = ({ item, onUpdateQuantity, onRemove, isLoading }) => {
                                     <i className="fas fa-minus"></i>
                                 </Button>
                                 <Form.Control
-                                    type="number"
+                                    type="text"
                                     value={quantity}
-                                    onChange={(e) => {
-                                        const newQty = parseInt(e.target.value) || 1;
-                                        handleQuantityChange(newQty);
-                                    }}
-                                    min="1"
-                                    max="99"
-                                    disabled={isUpdating || isLoading}
+                                    readOnly
                                     className="text-center quantity-input"
                                 />
                                 <Button
@@ -120,15 +115,15 @@ const CartItem = ({ item, onUpdateQuantity, onRemove, isLoading }) => {
                         </div>
                     </Col>
 
-                    <Col xs={6} sm={3} md={1}>
+                    <Col xs={6} sm={3} md={1} className="text-center">
                         <div className="item-total">
                             <strong>${itemTotal}</strong>
                         </div>
                     </Col>
 
-                    <Col xs={6} sm={3} md={1}>
+                    <Col xs={6} sm={3} md={1} className="text-center">
                         <Button
-                            variant="outline-danger"
+                            variant="danger"
                             size="sm"
                             onClick={handleRemove}
                             disabled={isUpdating || isLoading}

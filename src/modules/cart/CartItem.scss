@@ -1,0 +1,200 @@
+// Theme Variables
+$primary-color: #e11874;
+$danger-color: #dc3545;
+$warning-color: #ffc107;
+$text-color: #212529;
+$muted-color: #6c757d;
+$light-gray: #f8f9fa;
+$border-color: #dee2e6;
+
+// Cart Item Styles
+.cart-item {
+    margin-bottom: 1.5rem;
+    border: none;
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    overflow: hidden;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    &.updating {
+        opacity: 0.7;
+        pointer-events: none;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    // Item Image
+    .item-image {
+        position: relative;
+
+        img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 0.7rem;
+            border-radius: 10px;
+            // Using a variable for the pulse animation color
+            animation: pulse-warning 2s infinite;
+        }
+    }
+
+    // Item Details
+    .item-details {
+        .item-title {
+            color: $text-color;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .item-description {
+            color: $muted-color;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+
+            span {
+                color: #495057;
+                font-size: 0.85rem;
+
+                i {
+                    color: $primary-color;
+                    margin-right: 0.3rem;
+                }
+            }
+        }
+    }
+
+    // Item Price
+    .item-price {
+        text-align: center;
+
+        .original-price {
+            display: block;
+            text-decoration: line-through;
+            color: $muted-color;
+            font-size: 0.9rem;
+        }
+
+        .discounted-price {
+            display: block;
+            color: $danger-color;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .current-price {
+            color: $text-color;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+    }
+
+    // Quantity Controls
+    .quantity-controls {
+        .input-group {
+            max-width: 120px;
+            margin: 0 auto;
+
+            .btn {
+                border-color: $border-color;
+                background: white;
+                color: $muted-color;
+                transition: all 0.2s ease;
+
+                &:hover:not(:disabled) {
+                    background: $primary-color;
+                    color: white;
+                    border-color: $primary-color;
+                }
+                
+                &:focus {
+                    box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+                }
+
+                &:disabled {
+                    opacity: 0.5;
+                }
+            }
+
+            .quantity-input {
+                border-left: none;
+                border-right: none;
+                text-align: center;
+                font-weight: 600;
+
+                &:focus {
+                    border-color: $primary-color;
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+
+    // Item Total
+    .item-total {
+        text-align: center;
+        color: $text-color;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
+    // Remove Button
+    .remove-btn {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+
+        &.btn-danger {
+             background-color: $danger-color;
+             border-color: $danger-color;
+             color: white;
+        }
+
+        &:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba($danger-color, 0.3);
+        }
+    }
+}
+
+// Keyframes for pulse animation with variable
+@keyframes pulse-warning {
+    0% {
+        box-shadow: 0 0 0 0 rgba($warning-color, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba($warning-color, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba($warning-color, 0);
+    }
+}

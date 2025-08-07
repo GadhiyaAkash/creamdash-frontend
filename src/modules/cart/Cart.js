@@ -1,7 +1,9 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
-import { Button, Container, Row, Col, Card, Badge, Alert, Form, InputGroup } from 'react-bootstrap';
+import { Button, Container, Row, Col, Card, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { addCartItem, clearCart } from '../../store/cartSlice';
+import { notify } from '../../store/notificationSlice';
 import './Cart.scss';
 
 // Import assets
@@ -9,20 +11,15 @@ import noItemImage from '../../assets/no-item.png';
 import CartItem from './CartItem';
 import PromoCode from './PromoCode';
 import OrderSummary from './OrderSummary';
-import { useSelector } from 'react-redux';
 
 // Main Cart Component
-const Cart = ({
-  onRemoveFromCart, 
-  onClearCart, 
-  totalValue = 0, 
-  user = null,
-  onUpdateQuantity
-}) => {
+const Cart = () => {
+  const dispatch = useDispatch();
+  const { cartItems } = useSelector(state => state.cart);
+  const { user } = useSelector(state => state.user);
+
   const [isLoading, setIsLoading] = useState(false);
   const [appliedDiscount, setAppliedDiscount] = useState(0);
-  const [notification, setNotification] = useState(null);
-  const { cartItems, cartCount } = useSelector(state => state.cart);
 
   // Calculate totals
   const calculations = useMemo(() => {
@@ -48,58 +45,43 @@ const Cart = ({
   }, [cartItems, appliedDiscount]);
 
   const handleUpdateQuantity = useCallback(async (itemId, newQuantity) => {
-    if (onUpdateQuantity) {
-      onUpdateQuantity(itemId, newQuantity);
+    const item = cartItems.find(i => i.id === itemId);
+    if (item) {
+      dispatch(addCartItem({ ...item, quantity: newQuantity, isUpdating: true }));
     }
-  }, [onUpdateQuantity]);
+  }, [dispatch, cartItems]);
 
   const handleRemoveItem = useCallback(async (itemId) => {
     setIsLoading(true);
-    
     try {
-      onRemoveFromCart(itemId);
-      setNotification({
-        type: 'success',
-        message: 'Item removed from cart'
-      });
-      
-      // Clear notification after 3 seconds
-      setTimeout(() => setNotification(null), 3000);
+      // To remove, we dispatch addCartItem with quantity 0
+      const item = cartItems.find(i => i.id === itemId);
+      if (item) {
+        dispatch(addCartItem({ ...item, quantity: 0 }));
+        dispatch(notify({ message: 'Item removed from cart', type: 'success' }));
+      }
     } catch (error) {
-      setNotification({
-        type: 'error',
-        message: 'Failed to remove item'
-      });
+      dispatch(notify({ message: 'Failed to remove item', type: 'error' }));
     }
-    
     setIsLoading(false);
-  }, [onRemoveFromCart]);
+  }, [dispatch, cartItems]);
 
   const handleClearCart = useCallback(async () => {
     setIsLoading(true);
-    
     try {
-      onClearCart();
+      dispatch(clearCart());
       setAppliedDiscount(0);
-      setNotification({
-        type: 'success',
-        message: 'Cart cleared successfully'
-      });
-      
-      setTimeout(() => setNotification(null), 3000);
+      dispatch(notify({ message: 'Cart cleared successfully', type: 'success' }));
     } catch (error) {
-      setNotification({
-        type: 'error',
-        message: 'Failed to clear cart'
-      });
+      dispatch(notify({ message: 'Failed to clear cart', type: 'error' }));
     }
-    
     setIsLoading(false);
-  }, [onClearCart]);
+  }, [dispatch]);
 
   const handleApplyPromo = useCallback((discountPercent) => {
     setAppliedDiscount(discountPercent);
-  }, []);
+    dispatch(notify({ message: `Promo code applied! You get ${discountPercent}% off.`, type: 'success' }));
+  }, [dispatch]);
 
   if (cartItems.length === 0) {
     return (
@@ -169,19 +151,6 @@ const Cart = ({
           </Row>
         </div>
 
-        {/* Notifications */}
-        {notification && (
-          <Alert
-            variant={notification.type === 'error' ? 'danger' : 'success'}
-            dismissible
-            onClose={() => setNotification(null)}
-            className="mb-4"
-          >
-            <i className={`fas fa-${notification.type === 'error' ? 'exclamation-triangle' : 'check-circle'} me-2`}></i>
-            {notification.message}
-          </Alert>
-        )}
-
         <Row className="gy-4">
           {/* Cart Items */}
           <Col xl={8} lg={7}>
@@ -230,7 +199,7 @@ const Cart = ({
                   variant="primary"
                   size="lg"
                   className="w-100 checkout-btn"
-                  disabled={isLoading}
+                  disabled={isLoading || cartItems.length === 0}
                 >
                   <i className="fas fa-credit-card me-2"></i>
                   Proceed to Checkout
@@ -271,24 +240,6 @@ const Cart = ({
       </Container>
     </div>
   );
-};
-
-Cart.propTypes = {
-  onRemoveFromCart: PropTypes.func.isRequired,
-  onClearCart: PropTypes.func.isRequired,
-  totalValue: PropTypes.number,
-  user: PropTypes.shape({
-    name: PropTypes.string,
-    email: PropTypes.string,
-    role: PropTypes.string
-  }),
-  onUpdateQuantity: PropTypes.func
-};
-
-Cart.defaultProps = {
-  totalValue: 0,
-  user: null,
-  onUpdateQuantity: () => {}
 };
 
 export default Cart;

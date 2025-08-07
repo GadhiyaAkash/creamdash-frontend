@@ -1,16 +1,14 @@
-import React, { useState, useCallback, useMemo } from 'react';
-import { Button, Container, Row, Col, Card, Alert } from 'react-bootstrap';
+import { useState, useCallback, useMemo } from 'react';
+import { Button, Container, Row, Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addCartItem, clearCart } from '../../store/cartSlice';
 import { notify } from '../../store/notificationSlice';
 import './Cart.scss';
-
-// Import assets
-import noItemImage from '../../assets/no-item.png';
 import CartItem from './CartItem';
 import PromoCode from './PromoCode';
 import OrderSummary from './OrderSummary';
+import EmptyCart from './EmptyCart';
 
 // Main Cart Component
 const Cart = () => {
@@ -33,7 +31,6 @@ const Cart = () => {
     const shipping = discountedSubtotal > 50 ? 0 : 5.99; // Free shipping over $50
     const total = discountedSubtotal + tax + shipping;
     const itemCount = cartItems.reduce((count, item) => count + item.quantity, 0);
-
     return {
       subtotal,
       discountAmount,
@@ -51,30 +48,21 @@ const Cart = () => {
     }
   }, [dispatch, cartItems]);
 
+  // Handle remove item from the cart
   const handleRemoveItem = useCallback(async (itemId) => {
     setIsLoading(true);
-    try {
-      // To remove, we dispatch addCartItem with quantity 0
-      const item = cartItems.find(i => i.id === itemId);
-      if (item) {
-        dispatch(addCartItem({ ...item, quantity: 0 }));
-        dispatch(notify({ message: 'Item removed from cart', type: 'success' }));
-      }
-    } catch (error) {
-      dispatch(notify({ message: 'Failed to remove item', type: 'error' }));
+    const item = cartItems.find(i => i.id === itemId);
+    if (item) {
+      dispatch(addCartItem({ ...item, quantity: 0 }));
     }
     setIsLoading(false);
   }, [dispatch, cartItems]);
 
   const handleClearCart = useCallback(async () => {
     setIsLoading(true);
-    try {
-      dispatch(clearCart());
-      setAppliedDiscount(0);
-      dispatch(notify({ message: 'Cart cleared successfully', type: 'success' }));
-    } catch (error) {
-      dispatch(notify({ message: 'Failed to clear cart', type: 'error' }));
-    }
+    dispatch(clearCart());
+    setAppliedDiscount(0);
+    dispatch(notify({ message: 'Cart cleared successfully', type: 'success' }));
     setIsLoading(false);
   }, [dispatch]);
 
@@ -85,33 +73,7 @@ const Cart = () => {
 
   if (cartItems.length === 0) {
     return (
-      <div className="cart-page">
-        <Container fluid className="h-100">
-          <div className="empty-cart">
-            <div className="empty-cart-content">
-              <div className="empty-cart-image-wrapper">
-                <img 
-                  src={noItemImage} 
-                  alt="Empty cart" 
-                  className="empty-cart-image"
-                />
-              </div>
-              <h2>Your Cart is Empty</h2>
-              <p>Looks like you haven't added any delicious ice cream to your cart yet.</p>
-              <div className="empty-cart-actions">
-                <Button as={Link} to="/shop" variant="primary" size="lg" className="mb-2 mb-sm-0 me-sm-3">
-                  <i className="fas fa-shopping-bag me-2"></i>
-                  Start Shopping
-                </Button>
-                <Button as={Link} to="/" variant="outline-primary" size="lg">
-                  <i className="fas fa-home me-2"></i>
-                  Go Home
-                </Button>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </div>
+      <EmptyCart />
     );
   }
 

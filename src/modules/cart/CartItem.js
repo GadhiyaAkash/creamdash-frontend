@@ -37,7 +37,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove, isLoading }) => {
                 <Row className="align-items-center gy-3">
                     <Col xs={12} sm={6} md={2} className="text-center">
                         <div className="item-image">
-                            <img src={item.image} alt={item.title || item.name} />
+                            <img src={item.image} alt={item.name} />
                             {item.isPopular && (
                                 <Badge bg="warning" className="popular-badge">
                                     <i className="fas fa-fire me-1"></i>
@@ -49,7 +49,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove, isLoading }) => {
 
                     <Col xs={12} sm={6} md={4}>
                         <div className="item-details">
-                            <h5 className="item-title">{item.title || item.name}</h5>
+                            <h5 className="item-title">{item.name}</h5>
                             <p className="item-description">{item.description}</p>
                             <div className="item-meta">
                                 <span className="item-size">
@@ -77,9 +77,9 @@ const CartItem = ({ item, onUpdateQuantity, onRemove, isLoading }) => {
                         <div className="item-price">
                             {item.discount ? (
                                 <>
-                                    <span className="original-price">${item.price.toFixed(2)}</span>
+                                    <span className="original-price">${item.originalPrice.toFixed(2)}</span>
                                     <span className="discounted-price">
-                                        ${(item.price * (1 - item.discount / 100)).toFixed(2)}
+                                        ${item.price.toFixed(2)}
                                     </span>
                                 </>
                             ) : (

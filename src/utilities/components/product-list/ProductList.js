@@ -2,20 +2,11 @@ import { useCallback, useState } from 'react';
 import { Col } from 'react-bootstrap';
 import ProductCard from '../product-card/ProductCard';
 import { PRODUCT_LIST } from './ProductListConst';
-import { useDispatch } from 'react-redux';
-import { addCartItem } from '../../../store/cartSlice';
+import useProductUtils from '../../../hooks/useProductUtils';
 
 const ProductList = () => {
-    const [products, setProducts] = useState(PRODUCT_LIST.map(p => ({ ...p, quantity: 0 })));
-    const dispatch = useDispatch();
-
-    const updateProductQuantityToCart = (product, updatedQuantity) => {
-        const productWithQuantity = {
-            ...product,
-            quantity: updatedQuantity
-        };
-        dispatch(addCartItem(productWithQuantity));
-    }
+    const [products, setProducts] = useState(PRODUCT_LIST.slice(0, 4).map(p => ({ ...p, quantity: 0 })));
+    const { updateProductQuantityToCart } = useProductUtils();
 
     const handleUpdateQuantity = useCallback((productId, newQuantity) => {
         const product = products.find(p => p.id === productId);

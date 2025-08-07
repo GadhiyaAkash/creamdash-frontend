@@ -10,12 +10,14 @@ import LogoutConfirmation from './auth/LogoutConfirmation';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../store/userSlice';
 import Notification from './notification/Notification';
+import useScrollToTop from '../../hooks/useScrollToTop';
 
 const Header = () => {
   const location = useLocation();
   const user = useSelector(state => state.user.user);
   const { cartItems, cartCount } = useSelector(state => state.cart);
   const dispatch = useDispatch();
+  useScrollToTop();
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);

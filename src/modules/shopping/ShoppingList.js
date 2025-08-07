@@ -10,8 +10,17 @@ import useProductUtils from "../../hooks/useProductUtils";
 // Main Shopping List Component
 export const ShoppingList = () => {
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
-  const [products, setProducts] = useState(PRODUCT_LIST.map(p => ({ ...p, quantity: 0 })));
-  const { updateProductQuantityToCart } = useProductUtils();
+  const { updateProductQuantityToCart, cartItems } = useProductUtils();
+  
+
+  const [products, setProducts] = useState(PRODUCT_LIST.map((p) => {
+    const cartItem = cartItems.find(item => item.id === p.id);
+    return {
+      ...p,
+      quantity: cartItem ? cartItem.quantity : 0
+    };
+  }));
+  
 
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = [...products];

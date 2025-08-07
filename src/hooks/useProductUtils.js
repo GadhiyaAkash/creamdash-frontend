@@ -3,6 +3,8 @@ import { addCartItem } from "../store/cartSlice";
 
 const useProductUtils = () => {
     const dispatch = useDispatch();
+    const storedItems = localStorage.getItem('cartItems');
+    const cartItems = JSON.parse(storedItems) || [];
 
     const updateProductQuantityToCart = (product, updatedQuantity) => {
         const productWithQuantity = {
@@ -13,7 +15,8 @@ const useProductUtils = () => {
     };
 
     return {
-        updateProductQuantityToCart
+        updateProductQuantityToCart,
+        cartItems
     };
 };
 

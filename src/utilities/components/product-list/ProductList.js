@@ -5,8 +5,14 @@ import { PRODUCT_LIST } from './ProductListConst';
 import useProductUtils from '../../../hooks/useProductUtils';
 
 const ProductList = () => {
-    const [products, setProducts] = useState(PRODUCT_LIST.slice(0, 4).map(p => ({ ...p, quantity: 0 })));
-    const { updateProductQuantityToCart } = useProductUtils();
+    const { updateProductQuantityToCart, cartItems } = useProductUtils();
+    const [products, setProducts] = useState(PRODUCT_LIST.slice(0, 4).map((p) => {
+        const cartItem = cartItems.find(item => item.id === p.id);
+        return {
+            ...p,
+            quantity: cartItem ? cartItem.quantity : 0
+        };
+    }));
 
     const handleUpdateQuantity = useCallback((productId, newQuantity) => {
         const product = products.find(p => p.id === productId);

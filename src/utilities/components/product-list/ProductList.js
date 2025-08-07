@@ -2,16 +2,31 @@ import { useCallback, useState } from 'react';
 import { Col } from 'react-bootstrap';
 import ProductCard from '../product-card/ProductCard';
 import { PRODUCT_LIST } from './ProductListConst';
+import { useDispatch } from 'react-redux';
+import { addCartItem } from '../../../store/cartSlice';
 
 const ProductList = () => {
     const [products, setProducts] = useState(PRODUCT_LIST.map(p => ({ ...p, quantity: 0 })));
+    const dispatch = useDispatch();
+
+    const updateProductQuantityToCart = (product, updatedQuantity) => {
+        const productWithQuantity = {
+            ...product,
+            quantity: updatedQuantity
+        };
+        dispatch(addCartItem(productWithQuantity));
+    }
 
     const handleUpdateQuantity = useCallback((productId, newQuantity) => {
-        setProducts(prevProducts =>
-            prevProducts.map(p =>
-                p.id === productId ? { ...p, quantity: newQuantity } : p
-            )
-        );
+        const product = products.find(p => p.id === productId);
+        if (product) {
+            updateProductQuantityToCart(product, newQuantity);
+            setProducts(prevProducts =>
+                prevProducts.map(p =>
+                    p.id === productId ? { ...p, quantity: newQuantity } : p
+                )
+            );
+        }
     }, []);
 
     return (

@@ -3,13 +3,10 @@ import { useDispatch } from "react-redux";
 import { Card, Button, Badge, Spinner } from "react-bootstrap";
 import StarRating from "../start-rating/StarRating";
 import "./ProductCard.scss";
-import { notify } from "../../../store/notificationSlice";
-import { addCartItem } from "../../../store/cartSlice";
 
 // Product Card Component
 const ProductCard = ({ product, onQuantityChange }) => {
     const dispatch = useDispatch();
-    console.log("product::", product);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleQuantityChange = useCallback((newQuantity) => {
@@ -18,36 +15,14 @@ const ProductCard = ({ product, onQuantityChange }) => {
         }
     }, [product.id, onQuantityChange]);
 
+    // Add to cart Handler
     const handleAddToCart = useCallback(async (product) => {
-        console.log("Adding to cart:", product);
-        
-        const productWithQuantity = {
-            ...product,
-            quantity: Math.max(1, product.quantity)
-        };
+        let newQuantity = product.quantity + 1;
         setIsLoading(true);
-        try {
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 500));
-            const quantityToAdd = productWithQuantity.quantity || 1;
-            
-            dispatch(notify({
-                type: 'success',
-                message: `${productWithQuantity.name} ${quantityToAdd > 1 ? `(${quantityToAdd} items)` : ''} added to cart!`
-            }));
-            console.log("Product added to cart:", productWithQuantity);
-            dispatch(addCartItem(productWithQuantity));
-            // Notify the parent component to update the quantity
-            onQuantityChange(product.id, productWithQuantity.quantity);
-
-        } catch (error) {
-            dispatch(notify({
-                type: 'danger',
-                message: 'Failed to add item to cart. Please try again.'
-            }));
-        } finally {
-            setIsLoading(false);
-        }
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 500));
+        onQuantityChange(product.id, newQuantity);
+        setIsLoading(false);
     }, [product, dispatch, onQuantityChange]);
 
     return (

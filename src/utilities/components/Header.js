@@ -86,18 +86,36 @@ const Header = () => {
     return location.pathname.startsWith(path);
   }, [location.pathname]);
 
-  const handleSignup = useCallback((userData) => {
-    // In a real app, this would make an API call to create the user
-    // For demo purposes, we'll automatically log them in
-    const newUser = {
-      ...userData,
-      rememberMe: true // Auto-remember new users
-    };
-    localStorage.setItem('creamDashUser', JSON.stringify(newUser));
-    setShowSignupModal(false);
+  const handleSignup = useCallback(async (userData) => {
+    try {
+      const { registerWithEmailPassword } = await import('../../services/authService');
+      const result = await registerWithEmailPassword(
+        userData.email,
+        userData.password,
+        {
+          name: userData.name,
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          phone: userData.phone,
+          dateOfBirth: userData.dateOfBirth,
+          subscribeNewsletter: userData.subscribeNewsletter
+        }
+      );
 
-    // Show a welcome message or redirect to onboarding
-    console.log('New user registered:', newUser);
+      if (result.success) {
+        setShowSignupModal(false);
+        // The AuthContext will automatically update with the new user
+        console.log('New user registered successfully:', result.user);
+        return true;
+      } else {
+        console.error('Signup failed:', result.error);
+        // Throw error so SignupModal can catch and display it
+        throw new Error(result.error);
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
+      throw error; // Re-throw so SignupModal can handle it
+    }
   }, []);
 
   const handleLogout = useCallback(() => {

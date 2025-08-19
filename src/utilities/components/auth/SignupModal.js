@@ -143,25 +143,13 @@ const SignupModal = ({ show, onHide, onSignup, onSwitchToLogin }) => {
     setErrors({});
 
     try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      // Check if email already exists (simulate)
-      const existingEmails = ['admin@creamdash.com', 'user@creamdash.com', 'demo@creamdash.com'];
-      if (existingEmails.includes(formData.email.toLowerCase())) {
-        setErrors({ email: 'An account with this email already exists' });
-        setCurrentStep(1);
-        setIsLoading(false);
-        return;
-      }
-
       // Create user object
-      const newUser = {
-        id: Date.now().toString(),
+      const userData = {
         firstName: formData.firstName.trim(),
         lastName: formData.lastName.trim(),
         name: `${formData.firstName.trim()} ${formData.lastName.trim()}`,
         email: formData.email.toLowerCase().trim(),
+        password: formData.password,
         phone: formData.phone.trim(),
         dateOfBirth: formData.dateOfBirth,
         role: 'customer',
@@ -170,25 +158,37 @@ const SignupModal = ({ show, onHide, onSignup, onSwitchToLogin }) => {
         isVerified: false
       };
 
-      // Call parent signup handler
-      onSignup(newUser);
+      // Call parent signup handler and wait for result
+      const result = await onSignup(userData);
       
-      // Reset form
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        phone: '',
-        dateOfBirth: '',
-        agreeToTerms: false,
-        subscribeNewsletter: true
-      });
-      setCurrentStep(1);
+      // If signup was successful, the modal will be closed by the parent
+      // If there was an error, it should be handled here
+      if (result === false) {
+        // This means signup failed, but the parent should provide error details
+        setErrors({ general: 'Failed to create account. Please try again.' });
+      } else {
+        // Reset form on success
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+          phone: '',
+          dateOfBirth: '',
+          agreeToTerms: false,
+          subscribeNewsletter: true
+        });
+        setCurrentStep(1);
+      }
       
     } catch (error) {
-      setErrors({ general: 'Failed to create account. Please try again.' });
+      if (error.message && error.message.includes('email already exists')) {
+        setErrors({ email: error.message });
+        setCurrentStep(1);
+      } else {
+        setErrors({ general: error.message || 'Failed to create account. Please try again.' });
+      }
     }
     
     setIsLoading(false);
@@ -258,7 +258,7 @@ const SignupModal = ({ show, onHide, onSignup, onSwitchToLogin }) => {
             <div className="signup-step">
               <h5 className="step-title mb-3">
                 <i className="fas fa-user me-2"></i>
-                Personal Information
+                <span>Personal Information</span>
               </h5>
               
               <Row>
@@ -525,7 +525,7 @@ const SignupModal = ({ show, onHide, onSignup, onSwitchToLogin }) => {
                     >
                       {isLoading ? (
                         <>
-                          <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                          <output className="spinner-border spinner-border-sm me-2" aria-hidden="true"></output>
                           Creating Account...
                         </>
                       ) : (

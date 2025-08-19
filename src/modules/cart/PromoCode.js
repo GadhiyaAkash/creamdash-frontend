@@ -19,8 +19,10 @@ const PromoCode = ({ onApplyPromo, isLoading }) => {
     // Mock promo validation
     const validCodes = ['SAVE10', 'WELCOME20', 'ICECREAM15'];
     if (validCodes.includes(promoCode.toUpperCase())) {
-      const discount = promoCode.toUpperCase() === 'WELCOME20' ? 20 : 
-                     promoCode.toUpperCase() === 'ICECREAM15' ? 15 : 10;
+      const code = promoCode.toUpperCase();
+      let discount = 10; // default
+      if (code === 'WELCOME20') discount = 20;
+      else if (code === 'ICECREAM15') discount = 15;
       setPromoStatus({ type: 'success', message: `Promo code applied! ${discount}% off` });
       onApplyPromo(discount);
     } else {
@@ -33,7 +35,7 @@ const PromoCode = ({ onApplyPromo, isLoading }) => {
       <Card.Body>
         <h6 className="mb-3">
           <i className="fas fa-tag me-2"></i>
-          Have a Promo Code?
+          <span>Have a Promo Code?</span>
         </h6>
         
         {promoStatus && (
@@ -61,7 +63,7 @@ const PromoCode = ({ onApplyPromo, isLoading }) => {
             disabled={!promoCode.trim() || isLoading || promoStatus?.type === 'loading'}
           >
             {promoStatus?.type === 'loading' ? (
-              <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              <output className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></output>
             ) : (
               'Apply'
             )}

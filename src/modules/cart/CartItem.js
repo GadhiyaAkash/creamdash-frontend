@@ -41,7 +41,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove, isLoading }) => {
                             {item.isPopular && (
                                 <Badge bg="warning" className="popular-badge">
                                     <i className="fas fa-fire me-1"></i>
-                                    Popular
+                                    <span>Popular</span>
                                 </Badge>
                             )}
                         </div>
@@ -66,7 +66,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove, isLoading }) => {
                             {item.discount && (
                                 <div className="discount-info">
                                     <Badge bg="danger">
-                                        {item.discount}% OFF
+                                        <span>{item.discount}% OFF</span>
                                     </Badge>
                                 </div>
                             )}
@@ -131,7 +131,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove, isLoading }) => {
                             title="Remove item"
                         >
                             {isUpdating ? (
-                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <output className="spinner-border spinner-border-sm" aria-hidden="true"></output>
                             ) : (
                                 <i className="fas fa-trash"></i>
                             )}
@@ -144,19 +144,7 @@ const CartItem = ({ item, onUpdateQuantity, onRemove, isLoading }) => {
 };
 
 CartItem.propTypes = {
-    item: PropTypes.shape({
-        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-        title: PropTypes.string,
-        name: PropTypes.string,
-        description: PropTypes.string,
-        price: PropTypes.number.isRequired,
-        quantity: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        size: PropTypes.string,
-        prepTime: PropTypes.string,
-        isPopular: PropTypes.bool,
-        discount: PropTypes.number
-    }).isRequired,
+    item: PropTypes.object.isRequired,
     onUpdateQuantity: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,
     isLoading: PropTypes.bool

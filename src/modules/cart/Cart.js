@@ -93,7 +93,7 @@ const Cart = () => {
               )}
               <h1>
                 <i className="fas fa-shopping-cart me-3"></i>
-                Shopping Cart
+                <span>Shopping Cart</span>
               </h1>
               <p className="cart-subtitle">
                 {calculations.itemCount} item{calculations.itemCount !== 1 ? 's' : ''} in your cart
@@ -107,7 +107,7 @@ const Cart = () => {
                 className="clear-cart-btn w-100 w-lg-auto"
               >
                 <i className="fas fa-trash me-2"></i>
-                Clear Cart
+                <span>Clear Cart</span>
               </Button>
             </Col>
           </Row>
@@ -132,7 +132,7 @@ const Cart = () => {
             <div className="continue-shopping">
               <Button as={Link} to="/shop" variant="outline-primary">
                 <i className="fas fa-arrow-left me-2"></i>
-                Continue Shopping
+                <span>Continue Shopping</span>
               </Button>
             </div>
           </Col>
@@ -164,13 +164,13 @@ const Cart = () => {
                   disabled={isLoading || cartItems.length === 0}
                 >
                   <i className="fas fa-credit-card me-2"></i>
-                  Proceed to Checkout
+                  <span>Proceed to Checkout</span>
                 </Button>
                 
                 <div className="secure-checkout mt-2">
                   <small className="text-muted">
                     <i className="fas fa-lock me-1"></i>
-                    Secure checkout powered by SSL encryption
+                    <span>Secure checkout powered by SSL encryption</span>
                   </small>
                 </div>
               </div>
@@ -186,11 +186,11 @@ const Cart = () => {
                     {calculations.subtotal >= 50 ? (
                       <span className="text-success">
                         <i className="fas fa-check me-1"></i>
-                        You qualify for free shipping!
+                        <span>You qualify for free shipping!</span>
                       </span>
                     ) : (
                       <span>
-                        Add ${(50 - calculations.subtotal).toFixed(2)} more for free shipping
+                        <span>Add ${(50 - calculations.subtotal).toFixed(2)} more for free shipping</span>
                       </span>
                     )}
                   </p>

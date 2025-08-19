@@ -1,9 +1,10 @@
-@use 'sass:math';
+// Import variables
+@import '../../../styles/variables';
 
 .app-footer {
-    background: linear-gradient(135deg, var(--dark-footer-start) 0%, var(--dark-footer-middle) 50%, var(--dark-footer-end) 100%);
+    background: var(--gradient-dark);
     color: var(--font-color);
-    margin-top: 4rem;
+    margin-top: var(--spacing-4xl);
     position: relative;
     overflow: hidden;
 
@@ -14,40 +15,40 @@
         left: 0;
         right: 0;
         height: 2px;
-        background: linear-gradient(90deg, var(--lusious-pink), #4ecdc4, var(--lusious-pink));
+        background: linear-gradient(90deg, var(--primary), var(--secondary-accent), var(--primary));
     }
 
     .footer-content {
-        padding: 3rem 0 2rem;
+        padding: var(--spacing-3xl) 0 var(--spacing-2xl);
         position: relative;
         z-index: 2;
 
         .footer-section {
-            margin-bottom: 2rem;
+            margin-bottom: var(--spacing-2xl);
 
             .footer-brand {
-                font-size: 2rem;
-                font-weight: 700;
+                font-size: var(--font-size-4xl);
+                font-weight: var(--font-weight-bold);
                 color: var(--font-color);
-                margin-bottom: 1rem;
-                background: linear-gradient(135deg, var(--lusious-pink), var(--secondary-accent));
+                margin-bottom: var(--spacing-lg);
+                background: var(--gradient-primary);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
             }
 
             .footer-description {
-                font-size: 0.95rem;
-                line-height: 1.6;
+                font-size: var(--font-size-base);
+                line-height: var(--line-height-relaxed);
                 color: rgba(251, 230, 199, 0.8);
-                margin-bottom: 1.5rem;
+                margin-bottom: var(--spacing-xl);
             }
 
             .footer-title {
-                font-size: 1.2rem;
-                font-weight: 600;
+                font-size: var(--font-size-xl);
+                font-weight: var(--font-weight-semibold);
                 color: var(--font-color);
-                margin-bottom: 1.25rem;
+                margin-bottom: var(--spacing-xl);
                 position: relative;
 
                 &::after {
@@ -57,8 +58,8 @@
                     left: 0;
                     width: 30px;
                     height: 2px;
-                    background: var(--lusious-pink);
-                    border-radius: 1px;
+                    background: var(--primary);
+                    border-radius: var(--radius-xs);
                 }
             }
 
@@ -68,14 +69,14 @@
                 margin: 0;
 
                 li {
-                    margin-bottom: 0.75rem;
+                    margin-bottom: var(--spacing-md);
                 }
 
                 .footer-link {
                     color: rgba(251, 230, 199, 0.7);
                     text-decoration: none;
-                    font-size: 0.9rem;
-                    transition: all 0.3s ease;
+                    font-size: var(--font-size-base);
+                    transition: var(--transition-normal);
                     position: relative;
                     display: inline-block;
 
@@ -86,8 +87,8 @@
                         left: 0;
                         width: 0;
                         height: 1px;
-                        background: var(--lusious-pink);
-                        transition: width 0.3s ease;
+                        background: var(--primary);
+                        transition: var(--transition-normal);
                     }
 
                     &:hover {

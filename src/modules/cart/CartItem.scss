@@ -1,25 +1,22 @@
-// Theme Variables
-$primary-color: #e11874;
-$danger-color: #dc3545;
-$warning-color: #ffc107;
-$text-color: #212529;
-$muted-color: #6c757d;
-$light-gray: #f8f9fa;
-$border-color: #dee2e6;
+// Import variables
+@import '../../styles/variables';
 
-// Cart Item Styles
+// =================================================================
+// CART ITEM COMPONENT STYLES
+// =================================================================
+
 .cart-item {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--spacing-xl);
     border: none;
-    border-radius: 15px;
-    background-color: white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+    border-radius: var(--card-radius);
+    background-color: var(--bg-white);
+    box-shadow: var(--card-shadow);
+    transition: var(--transition-normal);
     overflow: hidden;
 
     &:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        box-shadow: var(--card-shadow-hover);
     }
 
     &.updating {
@@ -28,7 +25,7 @@ $border-color: #dee2e6;
     }
 
     .card-body {
-        padding: 1.5rem;
+        padding: var(--spacing-xl);
     }
 
     // Item Image
@@ -36,20 +33,19 @@ $border-color: #dee2e6;
         position: relative;
 
         img {
-            width: 80px;
-            height: 80px;
+            width: var(--cart-item-image-size);
+            height: var(--cart-item-image-size);
             object-fit: cover;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
         }
 
         .popular-badge {
             position: absolute;
             top: -5px;
             right: -5px;
-            font-size: 0.7rem;
-            border-radius: 10px;
-            // Using a variable for the pulse animation color
+            font-size: var(--font-size-xs);
+            border-radius: var(--badge-radius);
             animation: pulse-warning 2s infinite;
         }
     }
@@ -57,30 +53,30 @@ $border-color: #dee2e6;
     // Item Details
     .item-details {
         .item-title {
-            color: $text-color;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
+            color: var(--text-primary);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-lg);
         }
 
         .item-description {
-            color: $muted-color;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-size: var(--font-size-base);
+            margin-bottom: var(--spacing-sm);
         }
 
         .item-meta {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 0.5rem;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-sm);
 
             span {
-                color: #495057;
-                font-size: 0.85rem;
+                color: var(--text-dark);
+                font-size: var(--font-size-sm);
 
                 i {
-                    color: $primary-color;
-                    margin-right: 0.3rem;
+                    color: var(--primary);
+                    margin-right: var(--spacing-xs);
                 }
             }
         }
@@ -93,44 +89,44 @@ $border-color: #dee2e6;
         .original-price {
             display: block;
             text-decoration: line-through;
-            color: $muted-color;
-            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-size: var(--font-size-base);
         }
 
         .discounted-price {
             display: block;
-            color: $danger-color;
-            font-weight: 600;
-            font-size: 1.1rem;
+            color: var(--danger);
+            font-weight: var(--font-weight-semibold);
+            font-size: var(--font-size-lg);
         }
 
         .current-price {
-            color: $text-color;
-            font-weight: 600;
-            font-size: 1.1rem;
+            color: var(--text-primary);
+            font-weight: var(--font-weight-semibold);
+            font-size: var(--font-size-lg);
         }
     }
 
     // Quantity Controls
     .quantity-controls {
         .input-group {
-            max-width: 120px;
+            max-width: var(--cart-quantity-control-width);
             margin: 0 auto;
 
             .btn {
-                border-color: $border-color;
-                background: white;
-                color: $muted-color;
-                transition: all 0.2s ease;
+                border-color: var(--border-color);
+                background: var(--bg-white);
+                color: var(--text-muted);
+                transition: var(--transition-fast);
 
                 &:hover:not(:disabled) {
-                    background: $primary-color;
-                    color: white;
-                    border-color: $primary-color;
+                    background: var(--primary);
+                    color: var(--text-white);
+                    border-color: var(--primary);
                 }
                 
                 &:focus {
-                    box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+                    box-shadow: 0 0 0 var(--focus-ring-width) var(--lusious-pink-focus);
                 }
 
                 &:disabled {
@@ -142,10 +138,10 @@ $border-color: #dee2e6;
                 border-left: none;
                 border-right: none;
                 text-align: center;
-                font-weight: 600;
+                font-weight: var(--font-weight-semibold);
 
                 &:focus {
-                    border-color: $primary-color;
+                    border-color: var(--primary);
                     box-shadow: none;
                 }
             }
@@ -155,46 +151,49 @@ $border-color: #dee2e6;
     // Item Total
     .item-total {
         text-align: center;
-        color: $text-color;
-        font-size: 1.2rem;
-        font-weight: 700;
+        color: var(--text-primary);
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-bold);
     }
 
     // Remove Button
     .remove-btn {
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
+        border-radius: var(--radius-full);
+        width: var(--cart-remove-btn-size);
+        height: var(--cart-remove-btn-size);
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.3s ease;
+        transition: var(--transition-normal);
         border: 1px solid transparent;
 
         &.btn-danger {
-             background-color: $danger-color;
-             border-color: $danger-color;
-             color: white;
+            background-color: var(--danger);
+            border-color: var(--danger);
+            color: var(--text-white);
         }
 
         &:hover {
             transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba($danger-color, 0.3);
+            box-shadow: 0 4px 12px var(--lusious-pink-shadow);
         }
     }
 }
 
-// Keyframes for pulse animation with variable
+// =================================================================
+// ANIMATIONS
+// =================================================================
+
 @keyframes pulse-warning {
     0% {
-        box-shadow: 0 0 0 0 rgba($warning-color, 0.7);
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7); // warning color with alpha
     }
 
     70% {
-        box-shadow: 0 0 0 10px rgba($warning-color, 0);
+        box-shadow: 0 0 0 10px rgba(255, 193, 7, 0);
     }
 
     100% {
-        box-shadow: 0 0 0 0 rgba($warning-color, 0);
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
     }
 }

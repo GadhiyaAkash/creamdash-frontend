@@ -1,8 +1,39 @@
+// Import variables
+@import '../../../styles/variables';
+
 .notification-popup {
   position: absolute !important;
-  top: 20px;
-  right: 20px;
-  z-index: 1050; // High z-index to appear above other content
+  top: var(--spacing-lg);
+  right: var(--spacing-lg);
+  z-index: var(--z-modal); // High z-index to appear above other content
   min-width: 250px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-lg);
+  
+  .alert {
+    margin-bottom: 0;
+    border-radius: var(--radius-lg);
+    border: none;
+    box-shadow: var(--shadow-lg);
+    
+    &.alert-success {
+      background: linear-gradient(135deg, var(--success) 0%, rgba(25, 135, 84, 0.8) 100%);
+      color: var(--text-white);
+    }
+    
+    &.alert-danger {
+      background: linear-gradient(135deg, var(--danger) 0%, rgba(220, 53, 69, 0.8) 100%);
+      color: var(--text-white);
+    }
+    
+    &.alert-warning {
+      background: linear-gradient(135deg, var(--warning) 0%, rgba(255, 193, 7, 0.8) 100%);
+      color: var(--text-dark);
+    }
+    
+    &.alert-info {
+      background: linear-gradient(135deg, var(--info) 0%, rgba(13, 202, 240, 0.8) 100%);
+      color: var(--text-white);
+    }
+  }
 }

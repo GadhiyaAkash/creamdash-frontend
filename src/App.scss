@@ -1,119 +1,93 @@
-@use '~bootstrap/scss/bootstrap';
+// =================================================================
+// CREAMDASH FRONTEND - MAIN STYLESHEET
+// =================================================================
 
-:root {
-  --font-color: #fbe6c7;
-  --body-color: #fbe6c7;
-  --lusious-pink: #e11874;
-  --lusious-pink-hover: #b8135c;
-  --lusious-pink-light: rgba(225, 24, 116, 0.1);
-  --lusious-pink-focus: rgba(225, 24, 116, 0.25);
-  --lusious-pink-shadow: rgba(225, 24, 116, 0.3);
-  --secondary-accent: #4ecdc4;
-  --header-height: 120px;
+// Import Bootstrap using @import instead of @use to avoid conflicts
+@import '~bootstrap/scss/bootstrap';
 
-  // Additional colors for better consistency
-  --gold-gradient-start: #ffd700;
-  --gold-gradient-end: #ffed4e;
-  --orange-accent: #ff6b35;
-  --white: #ffffff;
-  --dark-footer-start: #1a1a2e;
-  --dark-footer-middle: #16213e;
-  --dark-footer-end: #0f172a;
-  --error-bg-start: #f8d7da;
-  --error-bg-end: #f5c6cb;
-  --error-text: #721c24;
-  --border-light-gray: #eee;
+// Import our custom variables
+@import './styles/variables';
 
-  // Dark mode colors
-  --dark-bg-primary: #2d3748;
-  --dark-bg-secondary: #4a5568;
-  --dark-text-primary: #e2e8f0;
-  --dark-text-secondary: #a0aec0;
-  --dark-text-muted: #adb5bd;
-
-  // Text colors
-  --text-primary: #2c3e50;
-  --text-secondary: #6c757d;
-  --text-muted: #6c757d;
-  --text-dark: #495057;
-
-  // Background colors
-  --bg-white: #ffffff;
-  --bg-light: #f8f9fa;
-  --bg-gray: #e9ecef;
-  --bg-input: #f8f9fa;
-
-  // Border colors
-  --border-color: #dee2e6;
-  --border-light: #e9ecef;
-  --border-focus: var(--lusious-pink);
-
-  // Shadow colors
-  --shadow-sm: rgba(0, 0, 0, 0.1);
-  --shadow-md: rgba(0, 0, 0, 0.15);
-  --shadow-lg: rgba(0, 0, 0, 0.2);
-
-  // Overlay colors
-  --overlay-light: rgba(255, 255, 255, 0.2);
-
-  // Override Bootstrap CSS variables
-  --bs-primary: #e11874;
-  --bs-secondary: #6c757d;
-  --bs-success: #198754;
-  --bs-info: #0dcaf0;
-  --bs-warning: #ffc107;
-  --bs-danger: #dc3545;
-  --bs-light: #f8f9fa;
-  --bs-dark: #212529;
-  --bs-body-color: #fbe6c7;
-  --bs-body-bg: #fbe6c7;
-  --bs-border-color: #dee2e6;
-  --bs-link-color: #e11874;
-  --bs-link-hover-color: #b8135c;
-  --bs-card-title-color: #f8f9fa; 
-}
+// =================================================================
+// GLOBAL STYLES
+// =================================================================
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-family-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--body-color);
+  background-color: var(--body-color);
 }
 
-// Global Bootstrap Button Overrides
+// =================================================================
+// GLOBAL COMPONENT OVERRIDES
+// =================================================================
+
+// Primary Button Overrides
 .btn-primary {
-  background-color: var(--lusious-pink) !important;
-  border-color: var(--lusious-pink) !important;
-  color: var(--white) !important;
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--text-white) !important;
+  border-radius: var(--button-radius);
+  font-weight: var(--font-weight-medium);
+  transition: var(--transition-normal);
+  padding: var(--btn-padding-md);
 
   &:hover {
-    background-color: var(--lusious-pink-hover) !important;
-    border-color: var(--lusious-pink-hover) !important;
-    color: var(--white) !important;
+    background-color: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+    color: var(--text-white) !important;
+    transform: translateY(-1px);
+    box-shadow: var(--button-shadow);
   }
 
   &:focus,
   &.focus {
-    background-color: var(--lusious-pink-hover) !important;
-    border-color: var(--lusious-pink-hover) !important;
-    box-shadow: 0 0 0 0.2rem var(--lusious-pink-focus) !important;
-    color: var(--white) !important;
+    background-color: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+    box-shadow: 0 0 0 var(--focus-ring-width) var(--lusious-pink-focus) !important;
+    color: var(--text-white) !important;
   }
 
   &:active,
   &.active,
   .show > &.dropdown-toggle {
-    background-color: var(--lusious-pink-hover) !important;
-    border-color: var(--lusious-pink-hover) !important;
-    color: var(--white) !important;
+    background-color: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+    color: var(--text-white) !important;
+    transform: translateY(0);
   }
 
   &:disabled,
   &.disabled {
-    background-color: var(--lusious-pink) !important;
-    border-color: var(--lusious-pink) !important;
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
     opacity: 0.65;
+    transform: none;
+    box-shadow: none;
   }
 }
+
+// =================================================================
+// UTILITY CLASSES
+// =================================================================
+
+.transition-fast { transition: var(--transition-fast); }
+.transition-normal { transition: var(--transition-normal); }
+.transition-slow { transition: var(--transition-slow); }
+.transition-bounce { transition: var(--transition-bounce); }
+
+.shadow-custom {
+  box-shadow: var(--card-shadow);
+  
+  &:hover {
+    box-shadow: var(--card-shadow-hover);
+  }
+}
+
+.radius-custom { border-radius: var(--card-radius); }
+.gradient-primary { background: var(--gradient-primary); }
+.gradient-gold { background: var(--gradient-gold); }
+.gradient-dark { background: var(--gradient-dark); }
